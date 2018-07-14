@@ -14,7 +14,7 @@ class Server {
 
   getServer() {
     this.server = client.guilds.first();
-    this.channel = this.server.channels.find('name', 'colosseum');
+    this.channel = this.server.channels.find('name', 'general');
   }
   getMemberById(id) {
     return this.server.members.find('id', id);
