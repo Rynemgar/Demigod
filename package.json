@@ -1,0 +1,17 @@
+{
+    "name": "demigod",
+    "version": "1.0.0",
+    "description": "Demigod returns the blockchain info for the Athena Network",
+    "main": "index.js",
+    "author": "Rynem",
+    "scripts": {
+      "start": "node index"
+    },
+    "dependencies": {
+      "discord.js": "^11.3.2",
+      "dotenv": "^5.0.1",
+      "request": "^2.87.0",
+      "request-promise-native": "^1.0.5"
+    }
+  }
+  
