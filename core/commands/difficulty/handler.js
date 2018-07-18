@@ -8,7 +8,7 @@ const rpc = new daemon({
   timeout: process.env.DAEMON_TIMEOUT
 })
 
-class RewardCommand extends MessageController {
+class difficultyCommand extends MessageController {
   constructor () {
     super()
     this.global = true
@@ -19,15 +19,15 @@ class RewardCommand extends MessageController {
     if (this.lastUsed + this.cooldown > Date.now()) return
     this.lastUsed = Date.now()
 
-    rpc.getLastBlockHeader()
+    rpc.getInfo()
     .then((response) => {
-      var count = (response.reward / 100).toLocaleString()
+      var count = response.difficulty.toLocaleString()
 
-      message.channel.send('The current block reward is **' + count + '** ATHX.')
+      message.channel.send('The difficulty is **' + count + '**.')
     }).catch((err) => {
       console.log(err)
     })
   }
 }
 
-module.exports = new RewardCommand()
+module.exports = new difficultyCommand()
