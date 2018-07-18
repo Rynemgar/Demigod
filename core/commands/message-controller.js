@@ -1,8 +1,7 @@
-const config = require('../../config');
 
 class MessageController {
   handleMessage(message) {
-    if (message.content[ 0 ] !== config.prefix) return;
+    if (message.content[ 0 ] !== process.env.DISCORD_PREFIX) return;
     const isBot = message.author.bot;
     const isGlobalMessage = this.global;
 

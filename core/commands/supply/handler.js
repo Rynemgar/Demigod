@@ -1,5 +1,12 @@
 const MessageController = require('../message-controller')
-const request = require('request-promise-native')
+
+const daemon = require('turtlecoin-rpc').TurtleCoind
+
+const rpc = new daemon({
+  host: process.env.DAEMON_HOST,
+  port: process.env.DAEMON_PORT,
+  timeout: process.env.DAEMON_TIMEOUT
+})
 
 class SupplyCommand extends MessageController {
   constructor () {
@@ -12,14 +19,21 @@ class SupplyCommand extends MessageController {
     if (this.lastUsed + this.cooldown > Date.now()) return
     this.lastUsed = Date.now()
 
-    request({
-      uri: 'http://explorer.athx.org/q/supply/',
-      method: 'GET'
-    }).then((response) => {
-      var count = response
-      message.channel.send(`The total circulating supply is ${count}`)
-      console.log(`Total circulating supply is ${count}`)
-    }).catch((err) => {
+
+    rpc.getLastBlockHeader()
+    .then(response => {
+      
+      return rpc.getBlock({
+        hash: response.hash
+      })
+    })
+    .then(response => {
+
+      var count = (response.alreadyGeneratedCoins / 100).toLocaleString()
+      
+      message.channel.send('The total circulating supply is **' + count + '** ATHX.')
+    })
+    .catch((err) => {
       console.log(err)
     })
   }

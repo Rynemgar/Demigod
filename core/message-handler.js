@@ -1,4 +1,3 @@
-const config = require('../config');
 const commands = require('./commands');
 
 module.exports = message => {

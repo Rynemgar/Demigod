@@ -1,6 +1,5 @@
 const serverid = require('../../server');
 const MessageController = require('../message-controller');
-const config = require('../../../config');
 
 class SaygenCommand extends MessageController {
   constructor() {
@@ -12,7 +11,7 @@ class SaygenCommand extends MessageController {
     if (message.guild) message.delete(10);
     const args = message.content.split(' ').slice(1);
 
-    if(message.author.id !== config.ownerID) {
+    if(message.author.id !== process.env.DISCORD_OWNER) {
       message.channel.send("Only Rynem can use my voice!");
 			return; //stop other people commanding bot
     }
